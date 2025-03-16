@@ -6,6 +6,7 @@
   --color-dark: #2E3238;
   --color-bg-input: #FCFCFD;
   --color-stroke: #D5D8DD;
+  --shadow-base: 0 4px 4px 0 rgba(0, 0, 0, 0.04);
 }
 
 *::-webkit-scrollbar{
@@ -25,11 +26,13 @@ body {
 input, .as_input{
   background-color: var(--color-bg-input);
   border-width: 1px;
-  border-color: var(--color-stroke);
+  border-color: var(--color-stroke) solid;
   border-radius: 4px;
   border-style: inset;
   padding: 6px 8px;
   max-height: 32px;
+  outline: none;
+  appearance: none;
 }
 
 input::placeholder{
@@ -38,13 +41,16 @@ input::placeholder{
 }
 
 button{
-  padding: 6px;
   border-width: 1px;
   border-color: var(--color-stroke);
   border-radius: 4px;
   border-style: inset;
-  aspect-ratio: 1/1;
   max-height: 32px;
+}
+
+.small-bt{
+  padding: 6px;
+  aspect-ratio: 1/1;
 }
 
 header{

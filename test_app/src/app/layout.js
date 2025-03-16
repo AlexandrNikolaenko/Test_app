@@ -1,11 +1,15 @@
-import { Open_Sans } from "next/font/google";
+import { Open_Sans, Montserrat } from "next/font/google";
 import "./globals.css";
 import Header from "./components/header";
-import Navigation from "./components/navigation";
 
 
 const openSans = Open_Sans({
   variable: "--font-open_sans",
+  subsets: ["latin"],
+});
+
+const montserratSans = Montserrat({
+  variable: "--font-montserrat",
   subsets: ["latin"],
 });
 
@@ -18,12 +22,10 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${openSans.variable} antialiased bg-white`}
+        className={`${openSans.variable} ${montserratSans.variable} antialiased bg-white`}
       >
         <Header></Header>
-        <main className="relatieve w-full flex h-screen pt-12">
-          <Navigation />
-        </main>
+        
         {children}
       </body>
     </html>
