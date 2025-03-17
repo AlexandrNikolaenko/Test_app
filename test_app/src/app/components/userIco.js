@@ -14,7 +14,7 @@ export default function Profile() {
         return (
             <div className="flex gap-2 items-center">
                 <Image alt="Avatar" width={32} height={32} src={data.data.avatar}/>
-                <span className="text-sm font-base text-">{data.data.username}</span>
+                <span className="text-sm font-base max-[767px]:hidden">{data.data.username}</span>
                 <button className="small-bt" onClick={() => {}}><Image alt="setting" width={20} height={20} src={'/Settings.svg'}/></button>
             </div>
         )

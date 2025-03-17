@@ -38,10 +38,11 @@ input, .as_input{
 }
 
 .as_input{
-  padding: 4px;
+  padding: 4px 30px 4px 4px;
 }
 
 input{
+  position: relative;
   padding: 6px 8px;
   max-height: 32px;
 }
@@ -81,4 +82,37 @@ header{
   border-width: 1px;
   border-color: #99D5FF;
   border-radius: 4px;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  display: none;
+  -webkit-appearance: none;
+}
+
+input[type="date"] {
+  -moz-appearance: textfield;
+}
+
+.search::after {
+  content: '';
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  background: url('/search.svg') no-repeat center center;
+  background-size: 16px 16px;
+}
+
+.filter_search::after{
+  content: '';
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  background: url('/filter.svg') no-repeat center center;
+  background-size: 16px 16px;
 }

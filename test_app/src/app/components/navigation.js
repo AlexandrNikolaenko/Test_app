@@ -7,17 +7,20 @@ import Link from "next/link";
 
 export default function Navigation() {
     let [isOpen, setIsOpen] = useState(false);
-    let [id, setId] = useState(0);
 
     useEffect(() => {
-        if (!isOpen && window.innerWidth > 991 && id == 0) setIsOpen(true);
+        try{
+            document.getElementById("funcBar").setAttribute('style', `width:${document.getElementById('taskBody').getBoundingClientRect().width}px`);
+        } catch(e) {
+            console.log(e);
+        }
     })
 
     return(
-        <div className="flex w-fit h-full relative z-30">
+        <div className="flex w-fit h-full relative max-[767px]:hidden z-30">
             <div className="h-full relative z-30 bg-white border-r-[1px] border-t-[1px] border-stroke min-w-[56px]">
-                <div className="p-4" onClick={() => {setIsOpen(!isOpen); setId(0)}}><Image alt="navigation" width={24} height={24} src={`/Nav${isOpen ? 'Active' : ''}.svg`}/></div>
-                <div className="p-4" onClick={() => {setIsOpen(false); setId(1)}}><Image alt="navigation" width={24} height={24} src={`/Star.svg`}/></div>
+                <div className="p-4" onClick={() => setIsOpen(!isOpen)}><Image alt="navigation" width={24} height={24} src={`/Nav${isOpen ? 'Active' : ''}.svg`}/></div>
+                <div className="p-4" onClick={() => setIsOpen(false)}><Image alt="navigation" width={24} height={24} src={`/Star.svg`}/></div>
             </div>
             <Nav isOpen={isOpen}/>
         </div>
@@ -26,10 +29,12 @@ export default function Navigation() {
 
 function Nav({isOpen}) {
     return (
-        <nav className={`flex flex-col ${!isOpen ? '-translate-x-full' : ''} relative z-20 transition-all h-full overflow-scroll border-r-[1px] border-stroke min-w-[280px]`}>
+        <nav className={`flex flex-col ${!isOpen ? 'hidden' : ''} relative max-[767px]:fixed max-[767px]:top-0 max-[767px]:left-0 max-[767px]:mt-14 z-20 max-[767px]:z-50 transition-all h-full overflow-scroll border-r-[1px] border-stroke min-w-[280px] bg-white`}>
             <div className="flex gap-2 p-4 border-y-[1px] border-y-stroke">
-                <input placeholder="Поиск по меню" name="menuSearch" id="menuSearch" className="min-w-[208px]"/>
-                <button className="small-bt"><Image alt="no pin" width={20} height={20} src={'/no-pin.svg'}/></button>
+                <div className="filter_search relative">
+                    <input placeholder="Поиск по меню" name="menuSearch" id="menuSearch" className="min-w-[208px]"/>
+                </div>
+                <button className="small-bt" onClick={(e) => e.preventDefault()}><Image alt="no pin" width={20} height={20} src={'/no-pin.svg'}/></button>
             </div>
             <ul className="flex flex-col bg-bg-input">
                 {navLink.map(link => <NavLink key={link.id} link={link}/>)}
@@ -47,4 +52,16 @@ function NavLink({link}) {
             <Link href={link.link} className="text-sm">{link.text}</Link>
         </li>
     )
+}
+
+export function HeaderNav() {
+    let [isOpen, setIsOpen] = useState(false);
+
+    return (
+        <div className="flex relative min-[766px]:hidden z-30 h-8 w-8">
+            <Image alt="navigation" width={24} height={24} src={`/Nav${isOpen ? 'Active' : ''}.svg`} onClick={() => setIsOpen(!isOpen)}/>
+            <Nav isOpen={isOpen}/>
+        </div>
+    )
+    
 }
