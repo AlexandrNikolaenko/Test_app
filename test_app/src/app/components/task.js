@@ -27,11 +27,11 @@ const defaultTasksValues = {
         defaultValue: 'Средний'
     },
     incharge: {
-        defaultValue: users[0].name,
+        defaultValue: users[0],
         variants: users
     },
     group: {
-        defaultValue: groups[0].name,
+        defaultValue: groups[0],
         variants: groups
     },
     comments: {
@@ -48,10 +48,12 @@ const defaultTasksValues = {
         defaultValue: '22.10.2024'
     },
     opener: {
-        defaultValue: 'Андрей Пивоваров'
+        defaultValue: users[0],
+        variants: users
     },
     creator: {
-        defaultValue: 'Андрей Пивоваров'
+        defaultValue: users[0],
+        variants: users
     }
 }
 
@@ -64,6 +66,21 @@ export default function Task() {
     function scroll(e) {
         if (!isShadow && e.target.scrollTop > 0) setIsShadow(true);
         else if (isShadow && e.target.scrollTop == 0) setIsShadow(false);
+    }
+
+    function save(e) {
+        e.preventDefault();
+        return
+    }
+
+    function saveAndExit() {
+        e.preventDefault();
+        return
+    }
+
+    function create() {
+        e.preventDefault();
+        return
     }
 
     useEffect(() => {
@@ -87,18 +104,18 @@ export default function Task() {
         let clearData = data.data
         return (
             <div id="taskBody" className="relative z-10 w-full pb-4 h-full overflow-scroll border-t-[1px] border-stroke" onScroll={scroll}>
-                <div id="funcBar" className={`fixed z-10 w-full max-w-[${width}px] flex justify-between p-4 bg-white ${isShadow && 'shadow-base'}`}>
+                <div id="funcBar" className={`fixed z-10 p-4 w-full bg-white ${isShadow && 'shadow-base'} w-full max-w-[${width}px] flex justify-between items-center`}>
                     <div className="flex gap-4 items-center">
                         <h3 className="text-xl font-title">Подзадача</h3>
-                        <button className="bg-white aspect-auto text-sm px-3 py-1.5">Создать</button>
+                        <button className="bg-white aspect-auto text-sm px-3 py-1.5" onClick={create}>Создать</button>
                     </div>
                     <div className="flex gap-4 items-center">
-                        <button className="aspect-auto text-white text-sm px-3 py-1.5 bg-[#0078CF]">Сохранить</button>
-                        <button className="bg-white aspect-auto text-sm px-3 py-1.5">Сохранить и выйти</button>
+                        <button className="aspect-auto text-white text-sm px-3 py-1.5 bg-[#0078CF]" onClick={save}>Сохранить</button>
+                        <button className="bg-white aspect-auto text-sm px-3 py-1.5" onClick={saveAndExit}>Сохранить и выйти</button>
                     </div>
                 </div>
                 <form className="flex flex-col gap-4 px-4 pt-[64px]">
-                    <h2 className={`font-semibold font-title text-2xl mb-2 line-clamp-1 max-w-[${width}px]`}>STSK0004783 На инциденте, запросе, проблеме, в статусе закрыто некоторые поля остаются редактируемыми для агента если он Caller</h2>
+                    <h2 className={`font-semibold font-title text-2xl mb-2 line-clamp-1 max-w-[${width}px]`}>{clearData.title}</h2>
                     <InputWrapper>
                         <RequiredInput name={'theme'} label={'Тема'} defaultValue={clearData.theme.defaultValue}/>
                         <BaseInput name={'status'} defaultValue={clearData.status.defaultValue} label={'Статус'}/>
@@ -116,7 +133,7 @@ export default function Task() {
                         <AddSearchInput name={'group'} label={'Группа'} defaultValue={clearData.group.defaultValue} variants={clearData.group.variants}/>
                     </InputWrapper>
                     <InputWrapper>
-                        <BaseInput name={'comments'} label={'Комментарии'} defaultValue={clearData.comments.defaultValue}/>
+                        <BaseInput name={'comments'} height={true} label={'Комментарии'} defaultValue={clearData.comments.defaultValue}/>
                     </InputWrapper>
                     <InputWrapper>
                         <ListInput name={'coordinating'} label={'Согласующие'} defaultValues={clearData.coordinating.defaultValues} variants={clearData.coordinating.variants}/>
@@ -126,8 +143,8 @@ export default function Task() {
                         <DateInput name={'created_at'} label={'Когда создано'} defaultValue={clearData.created_at.defaultValue}/>
                     </InputWrapper>
                     <InputWrapper>
-                        <AddSearchInput name={'opener'} label={'Кем открыто'} defaultValue={clearData.opener.defaultValue}/>
-                        <AddSearchInput name={'creator'} label={'Кем создано'} defaultValue={clearData.creator.defaultValue}/>
+                        <AddSearchInput name={'opener'} label={'Кем открыто'} defaultValue={clearData.opener.defaultValue} variants={clearData.opener.variants}/>
+                        <AddSearchInput name={'creator'} label={'Кем создано'} defaultValue={clearData.creator.defaultValue} variants={clearData.creator.variants}/>
                     </InputWrapper>
                 </form>
             </div>
@@ -144,13 +161,20 @@ function InputWrapper({children}) {
 }
 
 function AddSearchInput({label, defaultValue, name, variants}) {
+    let [isOpen, setIsOpen] = useState(false);
+    let [value, setValue] = useState(defaultValue);
+
     return (
         <div className="flex flex-col gap-2 w-full">
             <label htmlFor={name} className="text-sm">{label}</label>
             <div className="flex gap-1">
-                <input name={name} id={name} defaultValue={defaultValue} className="w-full as_input"/>
-                <button className="small-bt"><Image alt="search" width={20} height={20} src={'/search.svg'}/></button>
-                <button className="small-bt"><Image alt="search" width={20} height={20} src={'/plus.svg'}/></button>
+                <div name={name} id={name} defaultValue={defaultValue} className="w-full as_input relative">
+                    {value && <div className="choose flex gap-2 items-center py-0.5 px-2 h-6"><span className="text-sm line-clamp-1 ">{value.name}</span></div>}
+                    <Image alt="clear" height={16} width={16} src={'/clear.svg'} onClick={() => setValue(false)} className="absolute top-2 right-2 cursor-pointer"/>
+                    <ModalList setValue={setValue} variants={variants} isOpen={isOpen}/>
+                </div>
+                <button className="small-bt" onClick={(e) => {e.preventDefault(); setIsOpen(!isOpen)}}><Image alt="add" width={20} height={20} src={'/plus.svg'}/></button>
+                <button className="small-bt" onClick={(e) => e.preventDefault()}><Image alt="search" width={20} height={20} src={'/search.svg'}/></button>
             </div>
         </div>
     )
@@ -162,17 +186,24 @@ function SearchInput({label, defaultValue, name}) {
             <label htmlFor={name} className="text-sm">{label}</label>
             <div className="flex gap-1">
                 <input name={name} id={name} defaultValue={defaultValue} className="w-full"/>
-                <button className="small-bt"><Image alt="search" width={20} height={20} src={'/search.svg'}/></button>
+                <button className="small-bt" onClick={(e) => e.preventDefault()}><Image alt="search" width={20} height={20} src={'/search.svg'}/></button>
             </div>
         </div>
     )
 }
 
-function BaseInput({label, defaultValue, name}) {
+function BaseInput({label, defaultValue, name, height}) {
     return (
         <div className="flex flex-col gap-2 w-full">
             <label htmlFor={name} className="text-sm">{label}</label>
-            <input name={name} id={name} defaultValue={defaultValue} className="w-full"/>
+            {
+                height 
+                ?
+                <textarea name={name} id={name} defaultValue={defaultValue} className="w-full as_input"/>
+                :
+                <input name={name} id={name} defaultValue={defaultValue} className="w-full"/>
+            }
+            
         </div>
     )
 }
@@ -181,7 +212,7 @@ function RequiredInput({label, defaultValue, name}) {
     return (
         <div className="flex flex-col gap-2 w-full">
             <label htmlFor={name} className="flex gap-1 text-sm"><span className="text-red-800">*</span>{label}</label>
-            <input name={name} id={name} defaultValue={defaultValue} className="w-full"/>
+            <input required={true} name={name} id={name} defaultValue={defaultValue} className="w-full"/>
         </div>
     )
 }
@@ -199,14 +230,42 @@ function DateInput({label, defaultValue, name}) {
 }
 
 function ListInput({label, defaultValues, name, variants}) {
+    let [isOpen, setIsOpen] = useState(false);
+    let [values, setValues] = useState(defaultValues);
+
+    function setNew(variant) {
+        if (!Array.from(values).includes(variant)) setValues(values.concat(variant));
+    }
+
+    function deleteUser(variant) {
+        console.log(variant)
+        setValues(values.filter(value => value.id != variant.id));
+    }
+
     return (
         <div className="flex flex-col gap-2 w-full">
             <label htmlFor={name} className="text-sm">{label}</label>
             <div className="flex gap-1">
-                <div name={name} type="date" id={name} className="w-full as_input"></div>
-                <button className="small-bt"><Image alt="search" width={20} height={20} src={'/search.svg'}/></button>
-                <button className="small-bt"><Image alt="search" width={20} height={20} src={'/plus.svg'}/></button>
+                <div name={name} type="date" id={name} className="w-full relative flex flex-wrap p-1 gap-1 as_input" values={values}>
+                    {
+                        values.map(user => <div className="choose flex gap-2 items-center py-0.5 px-2" key={user.id}><span className="text-sm line-clamp-1">{user.name}</span><Image alt="delete" width={9.5} height={16} src={'/Close.svg'} onClick={() => deleteUser(user)}/></div>)
+                    }
+                    <Image alt="clear" height={16} width={16} src={'/clear.svg'} onClick={() => setValues([])} className="absolute top-2 right-2 cursor-pointer"/>
+                    <ModalList variants={variants} isOpen={isOpen} setValue={setNew}/>
+                </div>
+                <button className="small-bt" onClick={(e) => {e.preventDefault(); setIsOpen(!isOpen)}}><Image alt="add" width={20} height={20} src={'/plus.svg'}/></button>
+                <button className="small-bt" onClick={(e) => e.preventDefault()}><Image alt="search" width={20} height={20} src={'/search.svg'}/></button>
             </div>
         </div>
+    )
+}
+
+function ModalList({variants, setValue, isOpen}) {
+    return(
+        <ul className={`absolute right-[4px] ${!isOpen && 'hidden'} bg-white flex flex-col as_input z-50`}>
+            {
+                variants.map(variant => <li className="cursor-pointer px-2 py-1 text-sm" onClick={() => setValue(variant)} key={variant.id}>{variant.name}</li>)
+            }
+        </ul>
     )
 }
