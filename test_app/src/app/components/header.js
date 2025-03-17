@@ -1,10 +1,10 @@
-'use server'
+'use client'
 
 import Logo from "./logo"
 import { HeaderNav } from "./navigation"
 import Profile from "./userIco"
 
-export default async function Header() {
+export default function Header() {
     return (
         <header className="bg-white min-h-[56px] px-4 py-2 flex justify-between fixed w-full items-center z-50">
             <Logo />
