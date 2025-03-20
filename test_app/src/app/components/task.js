@@ -172,7 +172,7 @@ function AddSearchInput({label, defaultValue, name, variants}) {
                     <ModalList setValue={setValue} variants={variants} isOpen={isOpen}/>
                 </div>
                 <button className="small-bt" onClick={(e) => {e.preventDefault(); setIsOpen(!isOpen)}}><Image alt="add" width={20} height={20} src={'/plus.svg'}/></button>
-                <button className="small-bt" onClick={(e) => e.preventDefault()}><Image alt="search" width={20} height={20} src={'/search.svg'}/></button>
+                <button className="small-bt" onClick={(e) => e.preventDefault()}><Image alt="search" width={20} height={20} src={'/search-dark.svg'}/></button>
             </div>
         </div>
     )
@@ -184,7 +184,7 @@ function SearchInput({label, defaultValue, name}) {
             <label htmlFor={name} className="text-sm">{label}</label>
             <div className="flex gap-1">
                 <input name={name} id={name} defaultValue={defaultValue} className="w-full"/>
-                <button className="small-bt" onClick={(e) => e.preventDefault()}><Image alt="search" width={20} height={20} src={'/search.svg'}/></button>
+                <button className="small-bt" onClick={(e) => e.preventDefault()}><Image alt="search" width={20} height={20} src={'/search-dark.svg'}/></button>
             </div>
         </div>
     )
@@ -226,7 +226,7 @@ function DateInput({label, defaultValue, name}) {
             <label htmlFor={name} className="text-sm">{label}</label>
             <div className="flex gap-1">
                 <input name={name} type="date" id={name} defaultValue={defaultValue} className="w-full"/>
-                <button onClick={openPicker} className="small-bt"><Image alt="search" width={20} height={20} src={'/calendar.svg'}/></button>
+                <button onClick={openPicker} className="small-bt"><Image alt="calendar" width={20} height={20} src={'/calendar.svg'}/></button>
             </div>
         </div>
     )
@@ -257,7 +257,7 @@ function ListInput({label, defaultValues, name, variants}) {
                     <ModalList variants={variants} isOpen={isOpen} setValue={setNew}/>
                 </div>
                 <button className="small-bt" onClick={(e) => {e.preventDefault(); setIsOpen(!isOpen)}}><Image alt="add" width={20} height={20} src={'/plus.svg'}/></button>
-                <button className="small-bt" onClick={(e) => e.preventDefault()}><Image alt="search" width={20} height={20} src={'/search.svg'}/></button>
+                <button className="small-bt" onClick={(e) => e.preventDefault()}><Image alt="search" width={20} height={20} src={'/search-dark.svg'}/></button>
             </div>
         </div>
     )

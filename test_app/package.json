@@ -2,6 +2,7 @@
   "name": "test_app",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://AlexandrNikolaenko.github.io/Test_app",
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
@@ -9,9 +10,12 @@
     "lint": "next lint",
     "export": "next export",
     "postexport": "echo > out/.nojekyll",
-    "deploy": "npm run build && npm run export && npm run postexport && gh-pages -d out"
+    "deploy": "npm run build && npm run postexport && gh-pages -d out"
   },
   "dependencies": {
+    "autoprefixer": "^10.4.21",
+    "@tailwindcss/postcss": "^4",
+    "tailwindcss": "^4",
     "next": "15.2.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"

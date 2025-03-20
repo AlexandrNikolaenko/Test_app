@@ -48,7 +48,7 @@ function NavLink({link}) {
 
     return (
         <li className="flex gap-2 py-2.5 px-4 items-center">
-            <Image alt="open" width={16} height={16} src={'/Arrow.svg'} onClick={() => setIsOpen(!isOpen)} className={`transition-all ${isOpen ? 'rotate-90': ''}`}/>
+            <Image alt="open" width={16} height={16} src={'/arrow.svg'} onClick={() => setIsOpen(!isOpen)} className={`transition-all ${isOpen ? 'rotate-90': ''}`}/>
             <Link href={link.link} className="text-sm">{link.text}</Link>
         </li>
     )
