@@ -235,7 +235,6 @@ function DateInput({label, defaultValue, name}) {
 function ListInput({label, defaultValues, name, variants}) {
     let [isOpen, setIsOpen] = useState(false);
     let [values, setValues] = useState(defaultValues);
-    console.log(values);
 
     function setNew(variant) {
         if (!Array.from(values).includes(variant)) setValues(values.concat(variant));
