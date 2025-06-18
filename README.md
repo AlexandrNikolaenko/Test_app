@@ -6,6 +6,12 @@ First, run the development server:
 npm run dev
 ```
 
+Or if you want use docker compose:
+
+```bash
+docker compose up --build
+```
+
 To put your own info to product's card put in URL query params, for example:
 
 ```bash
