@@ -6,10 +6,6 @@ import { useSearchParams } from "next/navigation";
 
 export default function Home() {
   const params = useSearchParams();
-  // const [currency, price, origin] = [params.get("currency"), params.get("price"), params.get("origin")];
-  // console.log('asd')
-
-  console.log(params.get("title"));
   
   return (
     <main className="flex flex-col min-h-screen w-screen justify-center items-center p-5">

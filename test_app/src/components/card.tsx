@@ -5,10 +5,10 @@ import { memo } from "react";
 import { useCallback } from "react";
 
 export interface ProductProps {
-  title: string | undefined | null;
-  imageURL: string | undefined | null;
-  price: number | string | null;
-  origin: string | undefined | null;
+  title?: string | undefined | null;
+  imageURL?: string | undefined | null;
+  price?: number | string | null;
+  origin?: string | undefined | null;
   currency?: string | undefined | null;
 }
 
@@ -18,6 +18,14 @@ const MemoCard = memo(function MemoCard({
   price = "34900",
   origin = "Russia",
 }: ProductProps) {
+  console.log(
+    {
+      title,
+      imageURL,
+      price,
+      origin,
+    }
+  )
   return (
     <Card sx={{ width: "500px", borderRadius: 5, maxWidth: "100%" }}>
       <CardMedia image={String(imageURL)} title={String(title)} sx={{height: 300}}/>
@@ -35,7 +43,6 @@ const MemoCard = memo(function MemoCard({
 });
 
 export default function ProductCard({price, currency, origin, imageURL, title}: ProductProps) {
-  console.log(currency);
   const getPrice = useCallback(() => {
     const newPrice = new Intl.NumberFormat(origin || 'en-US', {
       style: "currency",
@@ -44,5 +51,5 @@ export default function ProductCard({price, currency, origin, imageURL, title}: 
     return newPrice.format(Number(price) || 34900);
   }, [currency, price, origin]);
 
-  return <MemoCard price={getPrice()} imageURL={imageURL} origin={origin} title={title}/>
+  return <MemoCard price={getPrice()} imageURL={imageURL ? imageURL : undefined} origin={origin ? origin : undefined} title={title ? title : undefined}/>
 }
