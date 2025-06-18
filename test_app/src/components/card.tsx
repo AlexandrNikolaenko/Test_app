@@ -18,17 +18,19 @@ const MemoCard = memo(function MemoCard({
   price = "34900",
   origin = "Russia",
 }: ProductProps) {
-  console.log(
-    {
-      title,
-      imageURL,
-      price,
-      origin,
-    }
-  )
+  console.log({
+    title,
+    imageURL,
+    price,
+    origin,
+  });
   return (
     <Card sx={{ width: "500px", borderRadius: 5, maxWidth: "100%" }}>
-      <CardMedia image={String(imageURL)} title={String(title)} sx={{height: 300}}/>
+      <CardMedia
+        image={String(imageURL)}
+        title={String(title)}
+        sx={{ height: 300 }}
+      />
       <CardContent>
         <Stack spacing={6} className="p-5">
           <Typography variant="h4">{title}</Typography>
@@ -42,14 +44,27 @@ const MemoCard = memo(function MemoCard({
   );
 });
 
-export default function ProductCard({price, currency, origin, imageURL, title}: ProductProps) {
+export default function ProductCard({
+  price,
+  currency,
+  origin,
+  imageURL,
+  title,
+}: ProductProps) {
   const getPrice = useCallback(() => {
-    const newPrice = new Intl.NumberFormat(origin || 'en-US', {
+    const newPrice = new Intl.NumberFormat(origin || "en-US", {
       style: "currency",
       currency: currency || "RUB",
     });
     return newPrice.format(Number(price) || 34900);
   }, [currency, price, origin]);
 
-  return <MemoCard price={getPrice()} imageURL={imageURL ? imageURL : undefined} origin={origin ? origin : undefined} title={title ? title : undefined}/>
+  return (
+    <MemoCard
+      price={getPrice()}
+      imageURL={imageURL ? imageURL : undefined}
+      origin={origin ? origin : undefined}
+      title={title ? title : undefined}
+    />
+  );
 }
