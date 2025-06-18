@@ -2,16 +2,10 @@ networks:
   dev:
 
 services:
-  nginx:
-    build: ./nginx
-    ports:
-      - "80:80"
-    depends_on:
-      - frontend
-    networks:
-      - dev
     
   frontend:
     build: ./test_app
+    ports:
+      - "80:80"
     networks:
       - dev
